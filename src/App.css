@@ -1,3 +1,15 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 10vh;
+  width: 100%;
+  border: solid 1px transparent;
+  background: rgb(31, 44, 94);
 }

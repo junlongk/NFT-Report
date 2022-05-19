@@ -1,12 +1,14 @@
 import React from "react";
 import "./App.css";
-import MetaMask from "./components/MetaMask";
+import Metamask from "./components/Metamask";
+import Searchbar from "./components/Searchbar";
 
 const App = () => {
   return (
     <div className="App">
-      <div className="nav-bar">
-        <MetaMask />
+      <div className="NavBar">
+        <Searchbar />
+        <Metamask />
       </div>
     </div>
   );
