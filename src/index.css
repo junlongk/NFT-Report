@@ -3,4 +3,6 @@ body {
   background: linear-gradient(rgb(31, 44, 94), rgb(81, 85, 100));
   background-attachment: fixed;
   box-sizing: border-box;
+  color: rgb(189, 189, 189);
+  font-family: "Merriweather Sans", sans-serif;
 }

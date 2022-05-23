@@ -1,8 +1,25 @@
 .SearchBar {
+  border: solid 0px transparent;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.247);
+  width: 400px;
+  height: 5vh;
 }
 
 .SearchInput {
+  border: solid 0px transparent;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.247);
+  margin: 5px;
+  padding: 12px;
+  width: 70%;
 }
 
 .SearchButton {
+  border: solid 0px transparent;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.247);
+  margin: 5px;
+  padding: 12px;
+  width: 15%;
 }

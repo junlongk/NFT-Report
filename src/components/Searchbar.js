@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import "./Searchbar.css";
 
-const Searchbar = () => {
+const Searchbar = ({ setSearch }) => {
   const [query, setQuery] = useState("");
-  const [search, setSearch] = useState("");
 
   const handleQuery = (event) => {
     setQuery(event.target.value);
@@ -10,6 +10,7 @@ const Searchbar = () => {
 
   const handleSearch = (event) => {
     setSearch(query);
+    setQuery("");
     event.preventDefault();
   };
 
