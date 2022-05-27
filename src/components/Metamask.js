@@ -5,7 +5,6 @@ import "./Metamask.css";
 const Metamask = () => {
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(null);
-  const [currentBlock, setBlock] = useState(null);
 
   async function connectMetamask() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);

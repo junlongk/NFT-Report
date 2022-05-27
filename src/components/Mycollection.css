@@ -1,0 +1,12 @@
+.MyCollection {
+  display: grid;
+  grid-template-columns: 240px 240px 240px;
+}
+
+.MyCollection a {
+  color: rgb(189, 189, 189);
+}
+
+.MyCollection a:hover {
+  color: rgb(158, 158, 158);
+}

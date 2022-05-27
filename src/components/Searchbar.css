@@ -3,7 +3,7 @@
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.247);
   width: 400px;
-  height: 5vh;
+  height: 7vh;
 }
 
 .SearchInput {
@@ -13,6 +13,7 @@
   margin: 5px;
   padding: 12px;
   width: 70%;
+  height: 3vh;
 }
 
 .SearchButton {

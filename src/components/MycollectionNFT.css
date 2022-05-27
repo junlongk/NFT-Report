@@ -1,0 +1,17 @@
+.IndividualNFTWindow {
+  margin: 10px;
+  line-height: 20px;
+  text-align: center;
+  font-family: "Merriweather Sans", sans-serif;
+  background-color: rgb(23, 33, 75);
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  font-size: 15px;
+}
+
+p {
+  font-size: 12px;
+}
