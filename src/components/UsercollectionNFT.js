@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./MycollectionNFT.css";
 
-const MycollectionNFT = ({ name, slug, imageUrl, setTotalFP }) => {
+import "./UsercollectionNFT.css";
+
+const UsercollectionNFT = ({ name, slug, imageUrl, totalFP, setTotalFP }) => {
   const [floorPrice, setFloorPrice] = useState(0);
 
   const addSlugToStatsUrl = (slug) => {
@@ -23,12 +24,13 @@ const MycollectionNFT = ({ name, slug, imageUrl, setTotalFP }) => {
         });
         const responseData = await response.json();
         setFloorPrice(responseData.stats.floor_price);
+        setTotalFP((totalFP) => totalFP + floorPrice);
       } catch (error) {
         console.error(error);
       }
     };
     getFloorPrice();
-  }, [statsUrl]);
+  }, [statsUrl, floorPrice, setTotalFP]);
 
   return (
     <div className="IndividualNFTWindow">
@@ -36,9 +38,9 @@ const MycollectionNFT = ({ name, slug, imageUrl, setTotalFP }) => {
         <h2>{name}</h2>
       </a>
       <img src={imageUrl} alt={name} />
-      <p>FP: {floorPrice}</p>
+      <p>FP: {floorPrice} ETH</p>
     </div>
   );
 };
 
-export default MycollectionNFT;
+export default UsercollectionNFT;

@@ -1,0 +1,27 @@
+.UserCollection a {
+  color: rgb(189, 189, 189);
+}
+
+.UserCollection a:hover {
+  color: rgb(158, 158, 158);
+}
+
+.UserCollection {
+  border: solid 5px transparent;
+}
+
+.UserPortfolio {
+  margin: 5px;
+  padding: 5px;
+  border: solid 2px rgb(189, 189, 189);
+  border-radius: 10px;
+}
+
+.UserNFTCollection {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+  padding: 5px;
+  border: solid 2px rgb(189, 189, 189);
+  border-radius: 10px;
+}
