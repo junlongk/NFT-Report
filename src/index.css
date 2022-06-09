@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
 body {
   margin: 0px;
   background: linear-gradient(rgb(31, 44, 94), rgb(81, 85, 100));
