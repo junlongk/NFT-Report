@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Usercollection.css";
 
@@ -6,12 +6,116 @@ import UsercollectionNFT from "./UsercollectionNFT";
 
 const Usercollection = ({
   search,
-  etherscanNormalResults,
   etherscan721Results,
   etherscan1155Results,
   openseaResults,
 }) => {
   const [totalFP, setTotalFP] = useState(0);
+  const [collectionList, setCollectionList] = useState([]);
+
+  const existingEntryChecker = (arr, entry) => {
+    const index = arr.findIndex((object) => {
+      return (
+        JSON.stringify(object.contractAddress) ===
+          JSON.stringify(entry.contractAddress) &&
+        JSON.stringify(object.tokenID) === JSON.stringify(entry.tokenID)
+      );
+    });
+    return index;
+  };
+
+  const addEntry = (entry, type) => {
+    let mintChecker = { mint: "No", mintDate: "", mintHash: "" };
+    let buyChecker = { buy: "No", buyDate: "", buyHash: "" };
+
+    if (entry.from === "0x0000000000000000000000000000000000000000") {
+      mintChecker = {
+        mint: "Yes",
+        mintDate: entry.timeStamp,
+        mintHash: entry.hash,
+      };
+    } else if (
+      entry.from !== "0x0000000000000000000000000000000000000000" &&
+      entry.to === search.toLowerCase()
+    ) {
+      buyChecker = {
+        buy: "Yes",
+        buyDate: entry.timeStamp,
+        buyHash: entry.hash,
+      };
+    }
+    return {
+      tokenName: entry.tokenName,
+      tokenID: entry.tokenID,
+      tokenType: type,
+      contractAddress: entry.contractAddress,
+      minted: mintChecker.mint,
+      mintedDate: mintChecker.mintDate,
+      mintedHash: mintChecker.mintHash,
+      mintedValue: "",
+      bought: buyChecker.buy,
+      boughtDate: buyChecker.buyDate,
+      boughtHash: buyChecker.buyHash,
+      boughtValue: "",
+      sold: "No",
+      soldDate: "",
+      soldHash: "",
+      soldValue: "",
+    };
+  };
+
+  const updateEntry = (arr, entry, index) => {
+    const oldEntry = arr[index];
+    oldEntry.sold = "Yes";
+    oldEntry.soldDate = entry.timeStamp;
+    oldEntry.soldHash = entry.hash;
+    return oldEntry;
+  };
+
+  useEffect(() => {
+    const temp721Array = [];
+    etherscan721Results.map((es721result) => {
+      const existingEntryIndex = existingEntryChecker(
+        temp721Array,
+        es721result
+      );
+      if (existingEntryIndex !== -1) {
+        temp721Array[existingEntryIndex] = updateEntry(
+          temp721Array,
+          es721result,
+          existingEntryIndex
+        );
+      } else {
+        temp721Array.push(addEntry(es721result, "721"));
+      }
+    });
+    setCollectionList((collectionList) => [...collectionList, ...temp721Array]);
+  }, [etherscan721Results]);
+
+  useEffect(() => {
+    const temp1155Array = [];
+    etherscan1155Results.map((es1155result) => {
+      const existingEntryIndex = existingEntryChecker(
+        temp1155Array,
+        es1155result
+      );
+      if (existingEntryIndex !== -1) {
+        temp1155Array[existingEntryIndex] = updateEntry(
+          temp1155Array,
+          es1155result,
+          existingEntryIndex
+        );
+      } else {
+        temp1155Array.push(addEntry(es1155result, "1155"));
+      }
+    });
+    setCollectionList((collectionList) => [
+      ...collectionList,
+      ...temp1155Array,
+    ]);
+  }, [etherscan1155Results]);
+
+  console.log(collectionList);
 
   const listOfNFT = openseaResults.map((osResult) => {
     return (
@@ -26,50 +130,6 @@ const Usercollection = ({
     );
   });
 
-  const listof721ESNFT = etherscan721Results.map((es721Result, index) => {
-    if (es721Result.from === "0x0000000000000000000000000000000000000000") {
-      return (
-        <p key={index}>
-          {es721Result.tokenName} #{es721Result.tokenID} minted!
-        </p>
-      );
-    } else if (es721Result.to === search.toLowerCase()) {
-      return (
-        <p key={index}>
-          {es721Result.tokenName} #{es721Result.tokenID} bought!
-        </p>
-      );
-    } else if (es721Result.from === search.toLowerCase()) {
-      return (
-        <p key={index}>
-          {es721Result.tokenName} #{es721Result.tokenID} sold!
-        </p>
-      );
-    }
-  });
-
-  const listof1155ESNFT = etherscan1155Results.map((es1155Result, index) => {
-    if (es1155Result.from === "0x0000000000000000000000000000000000000000") {
-      return (
-        <p key={index}>
-          {es1155Result.tokenName} #{es1155Result.tokenID} minted!
-        </p>
-      );
-    } else if (es1155Result.to === search.toLowerCase()) {
-      return (
-        <p key={index}>
-          {es1155Result.tokenName} #{es1155Result.tokenID} bought!
-        </p>
-      );
-    } else if (es1155Result.from === search.toLowerCase()) {
-      return (
-        <p key={index}>
-          {es1155Result.tokenName} #{es1155Result.tokenID} sold!
-        </p>
-      );
-    }
-  });
-
   return (
     <div className="UserCollection">
       <fieldset>
@@ -79,14 +139,7 @@ const Usercollection = ({
           <h2>Current Profile Value: {totalFP} ETH</h2>
         </div>
 
-        <div>
-          <h2>List of Etherscan 721 Tokens results</h2>
-          {listof721ESNFT}
-          <h2>List of Etherscan 1155 Tokens results</h2>
-          {listof1155ESNFT}
-        </div>
-
-        <div className="UserNFTCollection">{listOfNFT}</div>
+        <div className="UserNFTCollection">Placeholder!</div>
       </fieldset>
     </div>
   );
