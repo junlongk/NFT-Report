@@ -1,97 +1,87 @@
 import React, { useState, useEffect } from "react";
 
 import "./App.css";
-
 import Metamask from "./components/Metamask";
 import Searchbar from "./components/Searchbar";
 import Usercollection from "./components/Usercollection";
 
 const App = () => {
   const [search, setSearch] = useState("");
-  const [etherscan721Results, setEtherscan721Results] = useState([]);
-  const [etherscan1155Results, setEtherscan1155Results] = useState([]);
+  const [etherscanResults, setEtherscanResults] = useState([]);
   const [openseaResults, setOpenseaResults] = useState([]);
 
   useEffect(() => {
+    const getValue = async (entry) => {
+      try {
+        const infuraProjectId = process.env.REACT_APP_INFURA_PROJECT_ID;
+        const url = `https://mainnet.infura.io/v3/${infuraProjectId}`;
+        const ValueResponse = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "jsonrpc": "2.0",
+            "method": "eth_getTransactionByHash",
+            "params": [`${entry.hash}`],
+            "id": 1,
+          }),
+        });
+        const fetchValueResults = await ValueResponse.json();
+        Object.assign(entry, { value: `${fetchValueResults.result.value}` });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (search !== "") {
       const getEtherscan721Response = async () => {
         try {
           const walletAddress = search;
           const etherscanAPI = process.env.REACT_APP_ETHERSCAN_API_KEY;
-          const url =
-            "https://api.etherscan.io/api?module=account&action=tokennfttx&address=" +
-            walletAddress +
-            "&page=1&offset=100&startblock=0&endblock=999999999&sort=asc&apikey=" +
-            etherscanAPI;
+          const url = `https://api.etherscan.io/api?module=account&action=tokennfttx&address=${walletAddress}&page=1&offset=100&startblock=0&endblock=999999999&sort=asc&apikey=${etherscanAPI}`;
           const etherscan721Response = await fetch(url, {
             method: "GET",
           });
           const fetchES721Results = await etherscan721Response.json();
-          console.log(etherscan721Response);
-          console.log(fetchES721Results);
-          setEtherscan721Results(fetchES721Results.result);
+          fetchES721Results.result.forEach((entry) => {
+            getValue(entry);
+            entry.type = "721";
+          });
+          console.log(etherscan721Response, fetchES721Results.result);
+          setEtherscanResults((etherscanResults) => [
+            ...etherscanResults,
+            ...fetchES721Results.result,
+          ]);
         } catch (error) {
           console.error(error);
         }
       };
       getEtherscan721Response();
-    }
-  }, [search]);
 
-  useEffect(() => {
-    if (search !== "") {
       const getEtherscan1155Response = async () => {
         try {
           const walletAddress = search;
           const etherscanAPI = process.env.REACT_APP_ETHERSCAN_API_KEY;
-          const url =
-            "https://api.etherscan.io/api?module=account&action=token1155tx&address=" +
-            walletAddress +
-            "&page=1&offset=100&startblock=0&endblock=999999999&sort=asc&apikey=" +
-            etherscanAPI;
+          const url = `https://api.etherscan.io/api?module=account&action=token1155tx&address=${walletAddress}&page=1&offset=100&startblock=0&endblock=999999999&sort=asc&apikey=${etherscanAPI}`;
           const etherscan1155Response = await fetch(url, {
             method: "GET",
           });
           const fetchES1155Results = await etherscan1155Response.json();
-          console.log(etherscan1155Response);
-          console.log(fetchES1155Results);
-          setEtherscan1155Results(fetchES1155Results.result);
+          fetchES1155Results.result.forEach((entry) => {
+            getValue(entry);
+            entry.type = "1155";
+          });
+          console.log(etherscan1155Response, fetchES1155Results.result);
+          setEtherscanResults((etherscanResults) => [
+            ...etherscanResults,
+            ...fetchES1155Results.result,
+          ]);
         } catch (error) {
           console.error(error);
         }
       };
       getEtherscan1155Response();
-    }
-  }, [search]);
-
-  useEffect(() => {
-    if (search !== "") {
-      const getTestResponse = async () => {
-        try {
-          const infuraProjectId = process.env.REACT_APP_INFURA_PROJECT_ID;
-          const url = "https://mainnet.infura.io/v3/" + infuraProjectId;
-          const testResponse = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionByHash",
-              "params": [
-                "0x8eba45d95d6644103b96b871dde62b4e6e588730dbbc7efa136acf30c508f677",
-              ],
-              "id": 1,
-            }),
-          });
-          const fetchTestResults = await testResponse.json();
-          console.log(testResponse);
-          console.log(fetchTestResults);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getTestResponse();
     }
   }, [search]);
 
@@ -132,8 +122,7 @@ const App = () => {
       <div className="MainPage">
         <Usercollection
           search={search}
-          etherscan721Results={etherscan721Results}
-          etherscan1155Results={etherscan1155Results}
+          etherscanResults={etherscanResults}
           openseaResults={openseaResults}
         />
       </div>
