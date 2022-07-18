@@ -43,8 +43,8 @@ export default function Searchbar({ setSearch }) {
             onChange={(event) => handleQuery(event)}
             _invalid={{ borderColor: "red.400" }}
           />
-          <InputRightElement
-            children={
+          <InputRightElement>
+            {
               <Button
                 isDisabled={!ethAddTest}
                 variant="ghost"
@@ -55,7 +55,7 @@ export default function Searchbar({ setSearch }) {
                 <Icon as={GoSearch} />
               </Button>
             }
-          />
+          </InputRightElement>
         </InputGroup>
         {!isError ? (
           <FormHelperText fontSize="xs">

@@ -4,7 +4,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 import { SearchAddContext } from "../components/Layout";
 import NftBox from "../components/NftBox";
 
-export default function usercollection() {
+export default function UserCollection() {
   const search = useContext(SearchAddContext);
   const [etherscanResults, setEtherscanResults] = useState([]);
   const [collectionList, setCollectionList] = useState([]);
