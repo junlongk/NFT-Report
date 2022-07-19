@@ -34,11 +34,10 @@ export default function Searchbar({ setSearch }) {
   return (
     <form onSubmit={(event) => handleSearch(event)}>
       <FormControl isInvalid={isError}>
-        <InputGroup>
+        <InputGroup w={{ base: "240px", sm: "300px", md: "500px" }}>
           <Input
             variant="outline"
             size="md"
-            w={{ base: "300px", sm: "450px" }}
             value={query}
             onChange={(event) => handleQuery(event)}
             _invalid={{ borderColor: "red.400" }}
@@ -59,7 +58,7 @@ export default function Searchbar({ setSearch }) {
         </InputGroup>
         {!isError ? (
           <FormHelperText fontSize="xs">
-            Enter ETH wallet address here (eg. 0x1a2b...)
+            Enter ETH wallet address (eg. 0x1a2b...)
           </FormHelperText>
         ) : (
           <FormErrorMessage fontSize="xs" color="red.400">

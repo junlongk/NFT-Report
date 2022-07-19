@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 
 import { SearchAddContext } from "../components/Layout";
 import NftBox from "../components/NftBox";
@@ -171,26 +171,28 @@ export default function UserCollection() {
   });
 
   return (
-    <Box>
-      <Heading as="h1" size="md" m="20px">
+    <Flex
+      direction="column"
+      align="center"
+      maxW={{
+        base: "330px",
+        sm: "450px",
+        md: "720px",
+        lg: "960px",
+        xl: "1400px",
+      }}
+    >
+      <Heading as="h1" size={{ base: "sm", md: "md" }} m="20px">
         NFT Portfolio for {search}
       </Heading>
 
-      <Heading as="h2" size="sm" m="20px">
+      <Heading as="h2" size={{ base: "xs", md: "sm" }} m="20px">
         Current Profile Value: {totalFP} ETH
       </Heading>
 
-      <Flex
-        wrap="wrap"
-        justify="center"
-        m="20px"
-        p="10px"
-        border="solid 1px"
-        borderColor="white"
-        rounded="xl"
-      >
+      <Flex wrap="wrap" justify="center" m="20px" p="10px">
         {listOfNFT}
       </Flex>
-    </Box>
+    </Flex>
   );
 }

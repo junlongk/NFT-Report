@@ -7,13 +7,18 @@ const ChakraBox = chakra(motion.div, {
 
 export default function Home() {
   return (
-    <Box>
+    <Box
+      minW={{ base: "330px", sm: "450px", md: "720px", lg: "960px" }}
+      m="20px"
+    >
       <ChakraBox
         initial={{ opacity: 0 }}
         animate={{ x: [-100, 0], opacity: 1 }}
         transition={{ ease: "easeOut", duration: 2 }}
       >
-        <Heading as="h1">Gain extra insight on your NFT portfolio!</Heading>
+        <Heading as="h1" size="2xl">
+          Gain extra insight into your NFT portfolio!
+        </Heading>
       </ChakraBox>
     </Box>
   );

@@ -9,7 +9,7 @@ export default function Header({ setSearch }) {
       direction="row"
       justify="center"
       align="center"
-      gap={{ base: "5px", sm: "10px", md: "50px", lg: "100px" }}
+      gap={{ base: "5px", md: "50px", lg: "100px" }}
       mb="20px"
       h="75px"
       w="100%"

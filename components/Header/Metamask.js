@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, Flex, Text, Icon } from "@chakra-ui/react";
-import { CgLogIn, CgLogOut } from "react-icons/cg";
+import { CgLogOut } from "react-icons/cg";
 import { ethers } from "ethers";
 
 export default function Metamask() {
@@ -24,14 +24,13 @@ export default function Metamask() {
   const renderMetamask = () => {
     if (!account) {
       return (
-        <Box minW="160px" align="center">
+        <Box minW="150px" align="center">
           <Button
             variant="solid"
             colorScheme="blue"
             size="sm"
             onClick={() => connectMetamask()}
           >
-            <Icon as={CgLogIn} mr="5px" />
             Metamask
           </Button>
         </Box>
@@ -43,7 +42,7 @@ export default function Metamask() {
           justify="center"
           align="center"
           gap="5px"
-          minW="160px"
+          minW="150px"
         >
           <Text fontSize="sm">
             Welcome {account.slice(0, 4) + "..." + account.slice(37, 41)}!

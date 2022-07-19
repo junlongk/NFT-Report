@@ -15,7 +15,7 @@ export default function Layout({ children }) {
         <title>NFT Report</title>
         <meta
           name="description"
-          content="Gain insight into your NFT portfolio"
+          content="Gain extra insight into your NFT portfolio"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
