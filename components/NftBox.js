@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Center, Flex, Image, Heading, Text, Badge } from "@chakra-ui/react";
+import {
+  Center,
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Badge,
+  Stack,
+} from "@chakra-ui/react";
 
 export default function NftBox({ nftData, totalFP, setTotalFP }) {
   const [floorPrice, setFloorPrice] = useState(0);
@@ -56,9 +64,10 @@ export default function NftBox({ nftData, totalFP, setTotalFP }) {
     );
   };
 
-  //NFT status based on nftData - eg. bought, minted, sold
-  const NFTstatus = () => {
-    return <Text>Hi</Text>;
+  //Unix timestamp converter
+  const unixTimeStampConverter = (unixTimeStamp) => {
+    const date = new Date(unixTimeStamp * 1000);
+    return date.toLocaleDateString("en-US", { dateStyle: "medium" });
   };
 
   return (
@@ -66,22 +75,29 @@ export default function NftBox({ nftData, totalFP, setTotalFP }) {
       direction="column"
       justify="flex-start"
       align="center"
-      m="10px"
-      h="300px"
+      m="15px"
+      h="310px"
       w="240px"
       boxShadow="lg"
       rounded="xl"
       bg="gray.600"
     >
-      <a href="" target="_blank" rel="noreferrer">
-        <Heading as="h2" size="sm" noOfLines={1} my="10px">
+      <a
+        href={`https://opensea.io/collection/${osData?.collection?.slug}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Heading as="h2" size="sm" noOfLines={1} mt="10px" mx="10px">
           {nftData.tokenName}
         </Heading>
       </a>
+      <Text fontSize="xs" m="5px">
+        {osData?.name}
+      </Text>
       <Image
-        boxSize="180px"
+        boxSize="160px"
         objectFit="cover"
-        src={osData.image_preview_url}
+        src={osData?.image_preview_url}
         alt={nftData.tokenName}
         fallback={fallbackElement()}
         rounded="xl"
@@ -90,6 +106,23 @@ export default function NftBox({ nftData, totalFP, setTotalFP }) {
       <Text fontSize="xs" my="5px">
         FP: {floorPrice} ETH
       </Text>
+      <Stack align="center">
+        {nftData.bought == "Yes" && (
+          <Badge colorScheme="blue">
+            Bought on {unixTimeStampConverter(nftData.boughtDate)}
+          </Badge>
+        )}
+        {nftData.minted == "Yes" && (
+          <Badge colorScheme="green">
+            Minted on {unixTimeStampConverter(nftData.mintedDate)}
+          </Badge>
+        )}
+        {nftData.sold == "Yes" && (
+          <Badge colorScheme="red">
+            Sold on {unixTimeStampConverter(nftData.soldDate)}
+          </Badge>
+        )}
+      </Stack>
     </Flex>
   );
 }

@@ -97,7 +97,7 @@ export default function UserCollection() {
         );
       });
 
-      if (index !== -1) {
+      if (index != -1) {
         arr[index] = updateEntry(arr, entry, index);
       } else {
         arr.push(addEntry(entry));
