@@ -88,7 +88,14 @@ export default function NftBox({ nftData, totalFP, setTotalFP }) {
         target="_blank"
         rel="noreferrer"
       >
-        <Heading as="h2" size="sm" noOfLines={1} mt="10px" mx="10px">
+        <Heading
+          as="h2"
+          size="sm"
+          noOfLines={1}
+          mt="10px"
+          mx="10px"
+          fontFamily="Open Sans"
+        >
           {nftData.tokenName}
         </Heading>
       </a>
@@ -105,7 +112,7 @@ export default function NftBox({ nftData, totalFP, setTotalFP }) {
         boxShadow="lg"
       />
       <Tag size="sm" my="5px">
-        FP: {floorPrice} E
+        Floorprice: {floorPrice} E
       </Tag>
       <Stack align="center">
         {nftData.bought == "Yes" && (

@@ -33,7 +33,7 @@ export default function Searchbar({ setSearch }) {
 
   return (
     <form onSubmit={(event) => handleSearch(event)}>
-      <FormControl isInvalid={isError}>
+      <FormControl isInvalid={isError} fontFamily="Open Sans">
         <InputGroup w={{ base: "240px", sm: "300px", md: "500px" }}>
           <Input
             variant="outline"

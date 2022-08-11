@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { Flex, Heading } from "@chakra-ui/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { SearchAddContext } from "../components/Layout";
 import NftBox from "../components/NftBox";
 
 export default function UserCollection() {
-  const search = useContext(SearchAddContext);
+  const { search } = useContext(SearchAddContext);
   const [etherscanResults, setEtherscanResults] = useState([]);
   const [collectionList, setCollectionList] = useState([]);
   const [totalFP, setTotalFP] = useState(0);
@@ -171,28 +172,36 @@ export default function UserCollection() {
   });
 
   return (
-    <Flex
-      direction="column"
-      align="center"
-      maxW={{
-        base: "330px",
-        sm: "450px",
-        md: "720px",
-        lg: "960px",
-        xl: "1400px",
-      }}
-    >
-      <Heading as="h1" size={{ base: "sm", md: "md" }} m="20px">
-        NFT Portfolio for {search}
-      </Heading>
+    <AnimatePresence>
+      <Flex
+        as={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        direction="column"
+        align="center"
+        maxW={{
+          base: "330px",
+          sm: "450px",
+          md: "720px",
+          lg: "960px",
+          xl: "1400px",
+        }}
+        fontFamily="Open Sans"
+      >
+        <Heading
+          as="h1"
+          size={{ base: "sm", md: "md" }}
+          m="20px"
+          fontFamily="Open Sans"
+        >
+          NFT Portfolio for {search}
+        </Heading>
 
-      <Heading as="h2" size={{ base: "xs", md: "sm" }} m="20px">
-        Current Profile Value: {totalFP} ETH
-      </Heading>
-
-      <Flex wrap="wrap" justify="center" m="20px" p="10px">
-        {listOfNFT}
+        <Flex wrap="wrap" justify="center" m="20px" p="10px">
+          {listOfNFT}
+        </Flex>
       </Flex>
-    </Flex>
+    </AnimatePresence>
   );
 }

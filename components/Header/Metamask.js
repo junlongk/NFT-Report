@@ -30,6 +30,7 @@ export default function Metamask() {
             colorScheme="blue"
             size="sm"
             onClick={() => connectMetamask()}
+            fontFamily="Open Sans"
           >
             Metamask
           </Button>
@@ -43,6 +44,7 @@ export default function Metamask() {
           align="center"
           gap="5px"
           minW="150px"
+          fontFamily="Open Sans"
         >
           <Text fontSize="sm">
             Welcome {account.slice(0, 4) + "..." + account.slice(37, 41)}!

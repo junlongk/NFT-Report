@@ -27,7 +27,9 @@ export default function Layout({ children }) {
         align="center"
       >
         <Header setSearch={setSearch} />
-        <SearchAddContext.Provider value={search}>
+        <SearchAddContext.Provider
+          value={{ search: search, setSearch: setSearch }}
+        >
           <Box>{children}</Box>
         </SearchAddContext.Provider>
         <Footer />
